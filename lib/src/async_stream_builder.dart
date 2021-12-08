@@ -54,7 +54,7 @@ class AsyncStreamBuilder<T> extends StatefulWidget {
     bool? silent,
     ErrorReporterFn? reportError,
   })  : silent = silent ?? error != null,
-        waiting = waiting ?? ((c) => Center(child: CircularProgressIndicator())),
+        waiting = waiting ?? ((c) => const Center(child: CircularProgressIndicator())),
         error = error ?? errorWidget(),
         reportError = reportError ?? FlutterError.reportError,
         super(key: key);
