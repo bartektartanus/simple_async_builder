@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:simple_async_builder/simple_async_builder.dart';
 
 void main() {
@@ -11,9 +10,7 @@ class ExampleApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: ExampleWidget(),
-    );
+    return const MaterialApp(home: ExampleWidget());
   }
 }
 

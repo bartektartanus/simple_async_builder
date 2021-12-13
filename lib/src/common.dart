@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -8,7 +7,8 @@ import 'dialog.dart';
 typedef ValueBuilderFn<T> = Widget Function(BuildContext context, T value);
 
 /// Signature for a function that builds a widget from an exception.
-typedef ErrorBuilderFn = Widget Function(BuildContext context, Object error, StackTrace? stackTrace);
+typedef ErrorBuilderFn = Widget Function(
+    BuildContext context, Object error, StackTrace? stackTrace);
 
 /// Signature for a function that reports a flutter error, e.g. [FlutterError.reportError].
 typedef ErrorReporterFn = void Function(FlutterErrorDetails details);

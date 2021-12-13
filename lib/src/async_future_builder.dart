@@ -1,10 +1,11 @@
-
 import 'package:either_dart/either.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'common.dart';
 
+/// Widget that renders `waiting` widget while waiting for `future` to complete. When it happens `builder` is used
+/// to create widget based on value returned from `future`.
+/// If any `future` completed with error then `error` function is called.
 class AsyncFutureBuilder<T> extends StatefulWidget {
   /// The builder that should be called when no data is available.
   final WidgetBuilder waiting;
@@ -39,7 +40,8 @@ class AsyncFutureBuilder<T> extends StatefulWidget {
     this.retain = false,
     this.silent = true,
     ErrorReporterFn? reportError,
-  })  : waiting = waiting ?? ((c) => const Center(child: CircularProgressIndicator())),
+  })  : waiting = waiting ??
+            ((c) => const Center(child: CircularProgressIndicator())),
         error = error ?? errorWidget(),
         reportError = reportError ?? FlutterError.reportError,
         super(key: key);

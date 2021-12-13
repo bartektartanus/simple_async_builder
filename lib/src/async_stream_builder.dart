@@ -1,9 +1,7 @@
-
 import 'dart:async';
 
 import 'package:either_dart/either.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'common.dart';
 
@@ -54,7 +52,8 @@ class AsyncStreamBuilder<T> extends StatefulWidget {
     bool? silent,
     ErrorReporterFn? reportError,
   })  : silent = silent ?? error != null,
-        waiting = waiting ?? ((c) => const Center(child: CircularProgressIndicator())),
+        waiting = waiting ??
+            ((c) => const Center(child: CircularProgressIndicator())),
         error = error ?? errorWidget(),
         reportError = reportError ?? FlutterError.reportError,
         super(key: key);
@@ -109,7 +108,7 @@ class _AsyncStreamBuilderState<T> extends State<AsyncStreamBuilder<T>> {
     final stream = widget.stream;
     var skipFirst = false;
     _subscription = stream.listen(
-          (T event) {
+      (T event) {
         if (skipFirst) {
           skipFirst = false;
           return;

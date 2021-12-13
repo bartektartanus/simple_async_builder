@@ -1,6 +1,6 @@
 name: simple_async_builder
-description: Async widget builders made simple
-version: 0.0.1
+description: Async widget builders made simple. Easy to use `Future` and `Stream` builders.
+version: 0.0.2
 homepage: https://github.com/bartektartanus/simple_async_builder
 
 environment:
