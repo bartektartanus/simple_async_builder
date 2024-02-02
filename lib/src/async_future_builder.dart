@@ -32,7 +32,7 @@ class AsyncFutureBuilder<T> extends StatefulWidget {
 
   /// Creates a widget that builds depending on the state of a [Future] or [Stream].
   AsyncFutureBuilder({
-    Key? key,
+    super.key,
     WidgetBuilder? waiting,
     required this.builder,
     ErrorBuilderFn? error,
@@ -40,11 +40,9 @@ class AsyncFutureBuilder<T> extends StatefulWidget {
     this.retain = false,
     this.silent = true,
     ErrorReporterFn? reportError,
-  })  : waiting = waiting ??
-            ((c) => const Center(child: CircularProgressIndicator())),
+  })  : waiting = waiting ?? ((c) => const Center(child: CircularProgressIndicator())),
         error = error ?? errorWidget(),
-        reportError = reportError ?? FlutterError.reportError,
-        super(key: key);
+        reportError = reportError ?? FlutterError.reportError;
 
   @override
   State<StatefulWidget> createState() => _AsyncFutureBuilderState<T>();
@@ -103,13 +101,13 @@ class _AsyncFutureBuilderState<T> extends State<AsyncFutureBuilder<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final errorOrValue = _errorOrValue;
-    if (errorOrValue == null) {
-      return widget.waiting(context);
-    } else if (errorOrValue.isLeft) {
-      return widget.error(context, errorOrValue.left, _lastStackTrace);
-    } else {
-      return widget.builder(context, errorOrValue.right);
+    switch (_errorOrValue) {
+      case null:
+        return widget.waiting(context);
+      case Left(value: final left):
+        return widget.error(context, left, _lastStackTrace);
+      case Right(value: final right):
+        return widget.builder(context, right);
     }
   }
 }

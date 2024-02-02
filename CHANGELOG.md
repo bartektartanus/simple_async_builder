@@ -1,3 +1,8 @@
+## 0.1.0 - 2024-02-02
+
+# Other
+* Dependencies update
+
 ## 0.0.3 - 2022-02-18
 
 # Other

@@ -40,7 +40,7 @@ class AsyncStreamBuilder<T> extends StatefulWidget {
 
   /// Creates a widget that builds depending on the state of a [Future] or [Stream].
   AsyncStreamBuilder({
-    Key? key,
+    super.key,
     WidgetBuilder? waiting,
     required this.builder,
     ErrorBuilderFn? error,
@@ -52,11 +52,9 @@ class AsyncStreamBuilder<T> extends StatefulWidget {
     bool? silent,
     ErrorReporterFn? reportError,
   })  : silent = silent ?? error != null,
-        waiting = waiting ??
-            ((c) => const Center(child: CircularProgressIndicator())),
+        waiting = waiting ?? ((c) => const Center(child: CircularProgressIndicator())),
         error = error ?? errorWidget(),
-        reportError = reportError ?? FlutterError.reportError,
-        super(key: key);
+        reportError = reportError ?? FlutterError.reportError;
 
   @override
   State<StatefulWidget> createState() => _AsyncStreamBuilderState<T>();
@@ -145,20 +143,23 @@ class _AsyncStreamBuilderState<T> extends State<AsyncStreamBuilder<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final errorOrValue = _errorOrValue;
-    if (errorOrValue == null) {
-      final initial = widget.initial;
-      if (initial != null) {
-        return widget.builder(context, initial);
-      } else {
-        return widget.waiting(context);
-      }
-    } else if (errorOrValue.isLeft) {
-      return widget.error(context, errorOrValue.left, _lastStackTrace);
-    } else if (_isClosed && widget.closed != null) {
-      return widget.closed!(context, errorOrValue.right);
-    } else {
-      return widget.builder(context, errorOrValue.right);
+    switch (_errorOrValue) {
+      case null:
+        var initial = widget.initial;
+        if (initial != null) {
+          return widget.builder(context, initial);
+        } else {
+          return widget.waiting(context);
+        }
+      case Left(value: final left):
+        return widget.error(context, left, _lastStackTrace);
+      case Right(value: final right):
+        final closed = widget.closed;
+        if (_isClosed && closed != null) {
+          return closed(context, right);
+        } else {
+          return widget.builder(context, right);
+        }
     }
   }
 

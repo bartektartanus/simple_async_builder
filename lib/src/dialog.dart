@@ -27,8 +27,7 @@ class DialogIcon extends StatelessWidget {
   final String text;
   final IconData icon;
 
-  const DialogIcon(this.title, this.text, this.icon, {Key? key})
-      : super(key: key);
+  const DialogIcon(this.title, this.text, this.icon, {super.key});
 
   const DialogIcon.error(String text, {Key? key})
       : this('Error occurred', text, Icons.error_outline, key: key);
